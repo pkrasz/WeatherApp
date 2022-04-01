@@ -24,6 +24,7 @@ class EnterView: UIView {
         label.font = .boldSystemFont(ofSize: 15)
         return label
     }()
+    
     let cityTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -32,6 +33,7 @@ class EnterView: UIView {
         textField.textColor = .white
         return textField
     }()
+    
     let checkButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -71,22 +73,22 @@ class EnterView: UIView {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            logoImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
+            logoImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Constants.Margins.medium),
             logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             logoImageView.widthAnchor.constraint(equalToConstant: 250),
             logoImageView.heightAnchor.constraint(equalToConstant: 180),
             
-            cityLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 50),
+            cityLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: Constants.Margins.big),
             cityLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             
             cityTextField.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: 10),
             cityTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 100),
             cityTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -100),
             
-            checkButton.topAnchor.constraint(equalTo: cityTextField.bottomAnchor, constant: 50),
+            checkButton.topAnchor.constraint(equalTo: cityTextField.bottomAnchor, constant: Constants.Margins.big),
             checkButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             checkButton.widthAnchor.constraint(equalToConstant: 200),
-            checkButton.heightAnchor.constraint(equalToConstant: 50)
+            checkButton.heightAnchor.constraint(equalToConstant: Constants.Margins.big)
             
             
         ])

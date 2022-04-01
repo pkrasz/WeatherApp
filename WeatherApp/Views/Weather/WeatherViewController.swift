@@ -11,14 +11,29 @@ class WeatherViewController: UIViewController {
     
     //MARK: - Properties
     
-    var contentView: EnterView {
-        return view as! EnterView
+    var contentView: WeatherView {
+        return view as! WeatherView
     }
+    var cityName: String
+    var cityKey: Int
+    
+    //MARK: - Initializators
+    
+    init(cityName: String, cityKey: Int) {
+        self.cityName = cityName
+        self.cityKey = cityKey
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     //MARK: - Lifecycle
     
     override func loadView() {
-        view = EnterView()
+        view = WeatherView()
     }
     
     override func viewDidLoad() {
@@ -26,6 +41,11 @@ class WeatherViewController: UIViewController {
         
         setupView()
         setupBindings()
+        print("")
+        print("Jestesmy na Weather!")
+        print(cityKey)
+        print(cityName)
+        
     }
     
     //MARK: - Setup
