@@ -31,7 +31,6 @@ class WeatherView: UIView {
     let cityTextLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Warsaw"
         label.textColor = .systemBlue
         label.font = .boldSystemFont(ofSize: Constants.Font.small)
         
@@ -54,7 +53,6 @@ class WeatherView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Heavy Rain"
         label.textColor = .systemBlue
         label.font = .boldSystemFont(ofSize: Constants.Font.small)
         return label
@@ -75,7 +73,6 @@ class WeatherView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "22°C"
         label.textColor = .systemBlue
         label.font = .boldSystemFont(ofSize: Constants.Font.small)
         return label
@@ -96,7 +93,6 @@ class WeatherView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "2.444 mph"
         label.textColor = .systemBlue
         label.font = .boldSystemFont(ofSize: Constants.Font.small)
         return label
@@ -117,7 +113,6 @@ class WeatherView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "1.45 mbar"
         label.textColor = .systemBlue
         label.font = .boldSystemFont(ofSize: Constants.Font.small)
         return label
@@ -138,7 +133,6 @@ class WeatherView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "6.788 %"
         label.textColor = .systemBlue
         label.font = .boldSystemFont(ofSize: Constants.Font.small)
         return label

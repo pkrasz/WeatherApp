@@ -22,7 +22,7 @@ enum Route {
 }
 
 final class ApiClient {
-
+    
     // MARK: - Properties
     
     private let session: URLSession = .shared
@@ -33,13 +33,7 @@ final class ApiClient {
     
     func getData<Object: Decodable>(for route: Route, as type: Object.Type, completion: @escaping (Object) -> Void) {
         guard let url = URL(string: baseUrl + route.path) else { return }
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "POST"
-//        let testBody = "Test".data(using: .utf8)
-//        request.httpBody = testBody
-//        let task2 = session.dataTask(with: request) { <#Data?#>, <#URLResponse?#>, <#Error?#> in
-//            <#code#>
-//        }
+        
         let task = session.dataTask(with: url) { data, response, error in
             if let data = data {
                 let decoder = JSONDecoder()
@@ -47,7 +41,16 @@ final class ApiClient {
                     completion(object)
                 }
             }
+            
         }
         task.resume()
     }
 }
+
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "POST"
+//        let testBody = "Test".data(using: .utf8)
+//        request.httpBody = testBody
+//        let task2 = session.dataTask(with: request) { <#Data?#>, <#URLResponse?#>, <#Error?#> in
+//            <#code#>
+//        }

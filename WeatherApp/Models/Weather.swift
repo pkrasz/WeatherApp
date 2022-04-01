@@ -7,10 +7,14 @@
 
 import Foundation
 
-struct Weather: Codable {
+struct SingleWeather: Codable {
     let weather_state_name: String
     let the_temp: Double
     let wind_speed: Double
     let air_pressure: Double
     let humidity: Double
+}
+
+struct Weather: Codable {
+    let consolidated_weather: [SingleWeather]
 }

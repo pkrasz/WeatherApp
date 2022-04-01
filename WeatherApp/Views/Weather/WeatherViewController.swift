@@ -16,6 +16,11 @@ class WeatherViewController: UIViewController {
     }
     var cityName: String
     var cityKey: Int
+    var weatherState: String?
+    var temperature: Double?
+    var windSpeed: Double?
+    var pressure: Double?
+    var humidity: Double?
     
     //MARK: - Initializators
     
@@ -38,24 +43,44 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupView()
+      
         setupBindings()
-        print("")
-        print("Jestesmy na Weather!")
-        print(cityKey)
-        print(cityName)
+        setupView()
         
     }
     
     //MARK: - Setup
     
     private func setupView() {
+        while weatherState == nil {
+            print("CIPA")
+        }
+        
+        guard let weatherState = weatherState else {return}
+        guard let temperature = temperature else {return}
+        guard let windSpeed = windSpeed else {return}
+        guard let pressure = pressure else {return}
+        guard let humidity = humidity else {return}
+        
+        contentView.cityTextLabel.text = cityName
+        contentView.weatherStateTextLabel.text = weatherState
+        contentView.temperatureTextLabel.text = "\(String(temperature)) °C"
+        contentView.windSpeedTextLabel.text = "\(String(windSpeed)) mph"
+        contentView.pressureTextLabel.text = "\(String(pressure)) mbar"
+        contentView.humidityTextLabel.text = "\(String(humidity)) %"
         
     }
     
     private func setupBindings() {
-        
+        let apiClient = ApiClient.shared
+        apiClient.getData(for: .weather(String(cityKey)), as: Weather.self) { [weak self] weather in
+            let firstWeather = weather.consolidated_weather[0]
+            self?.weatherState = firstWeather.weather_state_name
+            self?.temperature = firstWeather.the_temp
+            self?.windSpeed = firstWeather.wind_speed
+            self?.pressure = firstWeather.air_pressure
+            self?.humidity = firstWeather.humidity
+        }
     }
 }
 

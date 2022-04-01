@@ -14,8 +14,8 @@ class EnterViewController: UIViewController {
     var contentView: EnterView {
         return view as! EnterView
     }
-    var cityKey: Int?
-    var cityName: String?
+    var cityKey: Int = 0
+    var cityName: String = ""
     
     //MARK: - Lifecycle
     
@@ -43,6 +43,7 @@ class EnterViewController: UIViewController {
             guard let city = city else {
                 return
             }
+            print("wszedl")
             let apiClient = ApiClient.shared
             // WEAK gdy wiesz ze cos nie jest od razu np odpowiedz z serwera
             apiClient.getData(for: .city(city), as: [City].self) { [weak self] cities in
@@ -51,9 +52,14 @@ class EnterViewController: UIViewController {
                 self?.cityName = firstCity.title
             }
             print("zrobione")
-            guard let cityKey = cityKey else {return}
-            guard let cityName = cityName else {return}
-
+            while cityKey == 0 && cityName == "" {
+                print("DUPA")
+            }
+            print(cityKey)
+                            print(cityName)
+//            guard let cityKey = cityKey else {return}
+//            guard let cityName = cityName else {return}
+            
             let weatherViewController = WeatherViewController(cityName: cityName, cityKey: cityKey)
             self.navigationController?.pushViewController(weatherViewController, animated: true)
         }
