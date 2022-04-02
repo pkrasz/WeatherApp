@@ -19,8 +19,8 @@ class EnterViewController: UIViewController {
         return view as! EnterView
     }
     
-    var cityKey: Int = 0
-    var cityName: String = ""
+    var cityKey: Int?
+    var cityName: String?
     var cities: [City] = [] {
         didSet {
             print(cities)
@@ -71,8 +71,19 @@ class EnterViewController: UIViewController {
         contentView.cityTextField.addAction(textEditing, for: .editingChanged)
         
         let tapped = UIAction{ [unowned self] _ in
-            let weatherViewController = WeatherViewController(cityName: self.cityName, cityKey: self.cityKey)
+            if cityKey == nil && cityName == nil {
+                let alert = UIAlertController(title: "Musisz zaznaczyć miasto!", message: nil, preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                
+                present(alert, animated: true)
+            } else {
+            guard let cityKey = cityKey else {return}
+            guard let cityName = cityName else {return}
+            
+            let weatherViewController = WeatherViewController(cityName: cityName, cityKey: cityKey)
             self.navigationController?.pushViewController(weatherViewController, animated: true)
+        }
         }
         contentView.checkButton.addAction(tapped, for: .touchUpInside)
     }
