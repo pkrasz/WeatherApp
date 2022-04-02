@@ -16,11 +16,13 @@ class WeatherViewController: UIViewController {
     }
     var cityName: String
     var cityKey: Int
-    var weatherState: String?
-    var temperature: Double?
-    var windSpeed: Double?
-    var pressure: Double?
-    var humidity: Double?
+    var weather: SingleWeather? {
+        didSet {
+            DispatchQueue.main.async {
+                self.loadInformation()
+            }
+        }
+    }
     
     //MARK: - Initializators
     
@@ -43,31 +45,14 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+        
         setupBindings()
         setupView()
-        
     }
     
     //MARK: - Setup
     
     private func setupView() {
-        while weatherState == nil {
-            print("CIPA")
-        }
-        
-        guard let weatherState = weatherState else {return}
-        guard let temperature = temperature else {return}
-        guard let windSpeed = windSpeed else {return}
-        guard let pressure = pressure else {return}
-        guard let humidity = humidity else {return}
-        
-        contentView.cityTextLabel.text = cityName
-        contentView.weatherStateTextLabel.text = weatherState
-        contentView.temperatureTextLabel.text = "\(String(temperature)) °C"
-        contentView.windSpeedTextLabel.text = "\(String(windSpeed)) mph"
-        contentView.pressureTextLabel.text = "\(String(pressure)) mbar"
-        contentView.humidityTextLabel.text = "\(String(humidity)) %"
         
     }
     
@@ -75,12 +60,21 @@ class WeatherViewController: UIViewController {
         let apiClient = ApiClient.shared
         apiClient.getData(for: .weather(String(cityKey)), as: Weather.self) { [weak self] weather in
             let firstWeather = weather.consolidated_weather[0]
-            self?.weatherState = firstWeather.weather_state_name
-            self?.temperature = firstWeather.the_temp
-            self?.windSpeed = firstWeather.wind_speed
-            self?.pressure = firstWeather.air_pressure
-            self?.humidity = firstWeather.humidity
+            self?.weather = firstWeather
         }
+    }
+    
+    //MARK: - Methods
+    
+    private func loadInformation() {
+        guard let weather = weather else {return}
+        contentView.cityTextLabel.text = cityName
+        contentView.weatherStateTextLabel.text = weather.weather_state_name
+        contentView.temperatureTextLabel.text = "\(String(weather.the_temp)) °C"
+        contentView.windSpeedTextLabel.text = "\(String(weather.wind_speed)) mph"
+        contentView.pressureTextLabel.text = "\(String(weather.air_pressure)) mbar"
+        contentView.humidityTextLabel.text = "\(String(weather.humidity)) %"
+        
     }
 }
 

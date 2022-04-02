@@ -7,6 +7,10 @@
 
 import UIKit
 
+enum Identifiere {
+    static let cell = "UITableViewCell"
+}
+
 class EnterViewController: UIViewController {
     
     //MARK: - Properties
@@ -14,8 +18,17 @@ class EnterViewController: UIViewController {
     var contentView: EnterView {
         return view as! EnterView
     }
+    
     var cityKey: Int = 0
     var cityName: String = ""
+    var cities: [City] = [] {
+        didSet {
+            print(cities)
+            DispatchQueue.main.async {
+                self.contentView.changeTableViewHeight(new: self.contentView.tableView.contentSize.height)
+            }
+        }
+    }
     
     //MARK: - Lifecycle
     
@@ -34,6 +47,9 @@ class EnterViewController: UIViewController {
     
     private func setupView() {
         
+        contentView.tableView.dataSource = self
+        contentView.tableView.delegate = self
+        contentView.tableView.register(UITableViewCell.self, forCellReuseIdentifier: Identifiere.cell)
     }
     
     private func setupBindings() {
@@ -43,34 +59,65 @@ class EnterViewController: UIViewController {
             guard let city = city else {
                 return
             }
-            print("wszedl")
             let apiClient = ApiClient.shared
             // WEAK gdy wiesz ze cos nie jest od razu np odpowiedz z serwera
             apiClient.getData(for: .city(city), as: [City].self) { [weak self] cities in
-                let firstCity = cities[0]
-                self?.cityKey = firstCity.woeid
-                self?.cityName = firstCity.title
+                self?.cities = cities
             }
-            print("zrobione")
-            while cityKey == 0 && cityName == "" {
-                print("DUPA")
+            if self.contentView.cityTextField.text == "" {
+                cities = []
             }
-            print(cityKey)
-                            print(cityName)
-//            guard let cityKey = cityKey else {return}
-//            guard let cityName = cityName else {return}
-            
-            let weatherViewController = WeatherViewController(cityName: cityName, cityKey: cityKey)
+        }
+        contentView.cityTextField.addAction(textEditing, for: .editingChanged)
+        
+        let tapped = UIAction{ [unowned self] _ in
+            let weatherViewController = WeatherViewController(cityName: self.cityName, cityKey: self.cityKey)
             self.navigationController?.pushViewController(weatherViewController, animated: true)
         }
-        
-        contentView.checkButton.addAction(textEditing, for: .touchUpInside)
-//        contentView.checkButton.addTarget(self, action: #selector(coordinateToWeather), for: .touchUpInside)
-        
+        contentView.checkButton.addAction(tapped, for: .touchUpInside)
     }
     
+    //MARK: - Methods
+    
+}
+
+extension EnterViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cities.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Identifiere.cell, for: indexPath)
+        cell.textLabel?.text = cities[indexPath.row].title
+        cell.backgroundColor = .systemCyan
+        cell.textLabel?.textColor = .white
+        return cell
+    }
+}
+
+extension EnterViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        cityName = cities[indexPath.row].title
+        cityKey = cities[indexPath.row].woeid
+    }
+}
+
+
+
+
+//contentView.checkButton.addTarget(self, action: #selector(coordinateToWeather), for: .touchUpInside)
+            
 //    @objc private func coordinateToWeather() {
 //        let weatherViewController = WeatherViewController(cityName: cityName, cityKey: cityKey)
 //        self.navigationController?.pushViewController(weatherViewController, animated: true)
 //    }
-}
+
+//        let textExperiment = UIAction{ [unowned self] _ in
+//
+//            //            guard let cityKey = cityKey else {return}
+//            //            guard let cityName = cityName else {return}
+//            let weatherViewController = WeatherViewController(cityName: self.cityName, cityKey: self.cityKey)
+//            self.navigationController?.pushViewController(weatherViewController, animated: true)
+//        }
+        
+//        contentView.cityTextField.addAction(textExperiment, for: .editingChanged)

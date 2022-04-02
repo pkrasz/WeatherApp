@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class EnterView: UIView {
     
@@ -19,9 +20,9 @@ class EnterView: UIView {
     let cityLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Podaj miasto w jakim chcesz sprawdzić pogodę!"
+        label.text = "Wpisz nazwę miasta!"
         label.textColor = .white
-        label.font = .boldSystemFont(ofSize: 15)
+        label.font = .boldSystemFont(ofSize: Constants.Font.small)
         return label
     }()
     
@@ -44,10 +45,28 @@ class EnterView: UIView {
         return button
     }()
     
+    var tableView: UITableView = {
+        let table = UITableView()
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.rowHeight = Constants.Font.small
+        table.backgroundColor = .systemCyan
+        table.separatorColor = .white
+        return table
+    }()
+    
+    var tableHeightAnchor: NSLayoutConstraint?
+    
+//    var tableHeight: Double = 40.0
+    
     //MARK: - Initializator
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        
+        tableHeightAnchor = tableView.heightAnchor.constraint(equalToConstant: 0)
+        guard let tableHeightAnchor = tableHeightAnchor else {return}
+        tableHeightAnchor.isActive = true
         
         setupView()
         setupSubview()
@@ -62,6 +81,8 @@ class EnterView: UIView {
     
     private func setupView() {
         backgroundColor = .systemCyan
+        print(tableView.contentSize.height)
+        print("ROOZAMIR WYZEJ Z ENTER")
     }
     
     private func setupSubview() {
@@ -69,9 +90,11 @@ class EnterView: UIView {
         addSubview(cityLabel)
         addSubview(cityTextField)
         addSubview(checkButton)
+        addSubview(tableView)
     }
     
     private func setupConstraints() {
+        guard let tableHeightAnchor = tableHeightAnchor else {return}
         NSLayoutConstraint.activate([
             logoImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Constants.Margins.medium),
             logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -84,14 +107,31 @@ class EnterView: UIView {
             cityTextField.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: 10),
             cityTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 100),
             cityTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -100),
+            cityTextField.heightAnchor.constraint(equalToConstant: Constants.Font.small),
             
-            checkButton.topAnchor.constraint(equalTo: cityTextField.bottomAnchor, constant: Constants.Margins.big),
+            tableView.topAnchor.constraint(equalTo: cityTextField.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: cityTextField.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: cityTextField.trailingAnchor),
+            tableHeightAnchor,
+            
+            checkButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: Constants.Margins.small),
             checkButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             checkButton.widthAnchor.constraint(equalToConstant: 200),
-            checkButton.heightAnchor.constraint(equalToConstant: Constants.Margins.big)
-            
+            checkButton.heightAnchor.constraint(equalToConstant: Constants.Margins.big),
+            checkButton.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor)
             
         ])
+    }
+    //MARK: - Methods
+    
+    func changeTableViewHeight(new height: Double) {
+        tableView.reloadData()
+        guard let tableHeightAnchor = tableHeightAnchor else {return}
+        if height < 160 {
+            tableHeightAnchor.constant = height
+        } else {
+            tableHeightAnchor.constant = 160
+        }
     }
 }
 
