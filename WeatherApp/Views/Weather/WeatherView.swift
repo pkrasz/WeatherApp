@@ -11,9 +11,9 @@ class WeatherView: UIView {
     
     //MARK: - SubView
     let weatherImageView: UIImageView = {
-        let image = UIImageView(image: UIImage(systemName: "cloud.sun.fill"))
+        let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.tintColor = .systemCyan
+        image.tintColor = .systemBlue
         return image
     }()
     

@@ -68,6 +68,32 @@ class WeatherViewController: UIViewController {
     
     private func loadInformation() {
         guard let weather = weather else {return}
+        
+        switch weather.weather_state_name {
+        case WeatherStates.Name.clear:
+            contentView.weatherImageView.image = WeatherStates.Image.clear
+        case WeatherStates.Name.hail:
+            contentView.weatherImageView.image = WeatherStates.Image.hail
+        case WeatherStates.Name.heavyCloud:
+            contentView.weatherImageView.image = WeatherStates.Image.heavyCloud
+        case WeatherStates.Name.heavyRain:
+            contentView.weatherImageView.image = WeatherStates.Image.heavyRain
+        case WeatherStates.Name.lightCloud:
+            contentView.weatherImageView.image = WeatherStates.Image.lightCloud
+        case WeatherStates.Name.lightRain:
+            contentView.weatherImageView.image = WeatherStates.Image.lightRain
+        case WeatherStates.Name.showers:
+            contentView.weatherImageView.image = WeatherStates.Image.showers
+        case WeatherStates.Name.sleet:
+            contentView.weatherImageView.image = WeatherStates.Image.sleet
+        case WeatherStates.Name.snow:
+            contentView.weatherImageView.image = WeatherStates.Image.snow
+        case WeatherStates.Name.thunderstorm:
+            contentView.weatherImageView.image = WeatherStates.Image.thunderstorm
+        default:
+            contentView.weatherImageView.image = UIImage(systemName: "cloud.sun")
+        }
+        
         contentView.cityTextLabel.text = cityName
         contentView.weatherStateTextLabel.text = weather.weather_state_name
         contentView.temperatureTextLabel.text = "\(String(weather.the_temp)) °C"

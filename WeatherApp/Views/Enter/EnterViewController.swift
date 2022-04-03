@@ -25,7 +25,9 @@ class EnterViewController: UIViewController {
         didSet {
             print(cities)
             DispatchQueue.main.async {
-                self.contentView.changeTableViewHeight(new: self.contentView.tableView.contentSize.height)
+                print("PONIZEJ TABELKA")
+                print(self.cities)
+                self.contentView.changeTableViewHeight()
             }
         }
     }
@@ -110,6 +112,7 @@ extension EnterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         cityName = cities[indexPath.row].title
         cityKey = cities[indexPath.row].woeid
+        contentView.cityTextField.text = cityName
     }
 }
 

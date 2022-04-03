@@ -124,8 +124,11 @@ class EnterView: UIView {
     }
     //MARK: - Methods
     
-    func changeTableViewHeight(new height: Double) {
+    func changeTableViewHeight() {
         tableView.reloadData()
+        let height = tableView.contentSize.height
+        print("PONIZEJ WYNIK")
+        print(height)
         guard let tableHeightAnchor = tableHeightAnchor else {return}
         if height < 160 {
             tableHeightAnchor.constant = height
