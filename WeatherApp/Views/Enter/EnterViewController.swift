@@ -11,7 +11,7 @@ enum Identifiere {
     static let cell = "UITableViewCell"
 }
 
-class EnterViewController: UIViewController {
+final class EnterViewController: UIViewController {
     
     //MARK: - Properties
     
@@ -27,6 +27,7 @@ class EnterViewController: UIViewController {
             DispatchQueue.main.async {
                 print("PONIZEJ TABELKA")
                 print(self.cities)
+                self.contentView.tableView.reloadData()
                 self.contentView.changeTableViewHeight()
             }
         }
@@ -92,6 +93,10 @@ class EnterViewController: UIViewController {
     
     //MARK: - Methods
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+        super.touchesBegan(touches, with: event)
+    }
 }
 
 extension EnterViewController: UITableViewDataSource {
@@ -115,7 +120,6 @@ extension EnterViewController: UITableViewDelegate {
         contentView.cityTextField.text = cityName
     }
 }
-
 
 
 

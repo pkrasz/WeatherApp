@@ -8,11 +8,19 @@
 import Foundation
 
 struct SingleWeather: Codable {
-    let weather_state_name: String
-    let the_temp: Double
-    let wind_speed: Double
-    let air_pressure: Double
-    let humidity: Double
+    let weatherStateName: String
+    let theTemp: Float
+    let windSpeed: Float
+    let airPressure: Float
+    let humidity: Float
+    
+    enum CodingKeys: String, CodingKey {
+        case weatherStateName = "weather_state_name"
+        case theTemp = "the_temp"
+        case windSpeed = "wind_speed"
+        case airPressure = "air_pressure"
+        case humidity
+    }
 }
 
 struct Weather: Codable {

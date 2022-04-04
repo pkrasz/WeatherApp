@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeatherViewController: UIViewController {
+final class WeatherViewController: UIViewController {
     
     //MARK: - Properties
     
@@ -53,7 +53,7 @@ class WeatherViewController: UIViewController {
     //MARK: - Setup
     
     private func setupView() {
-        
+        self.navigationController?.navigationBar.backgroundColor = .systemCyan
     }
     
     private func setupBindings() {
@@ -67,9 +67,12 @@ class WeatherViewController: UIViewController {
     //MARK: - Methods
     
     private func loadInformation() {
+        
+        contentView.activityIndicatorView.isHidden = true
+        
         guard let weather = weather else {return}
         
-        switch weather.weather_state_name {
+        switch weather.weatherStateName {
         case WeatherStates.Name.clear:
             contentView.weatherImageView.image = WeatherStates.Image.clear
         case WeatherStates.Name.hail:
@@ -95,12 +98,15 @@ class WeatherViewController: UIViewController {
         }
         
         contentView.cityTextLabel.text = cityName
-        contentView.weatherStateTextLabel.text = weather.weather_state_name
-        contentView.temperatureTextLabel.text = "\(String(weather.the_temp)) °C"
-        contentView.windSpeedTextLabel.text = "\(String(weather.wind_speed)) mph"
-        contentView.pressureTextLabel.text = "\(String(weather.air_pressure)) mbar"
+        contentView.weatherStateTextLabel.text = weather.weatherStateName
+        contentView.temperatureTextLabel.text = "\(String(weather.theTemp)) °C"
+        contentView.windSpeedTextLabel.text = "\(String(weather.windSpeed)) mph"
+        contentView.pressureTextLabel.text = "\(String(weather.airPressure)) mbar"
         contentView.humidityTextLabel.text = "\(String(weather.humidity)) %"
         
+        UIView.animate(withDuration: 0.5) {
+            self.contentView.layoutIfNeeded()
+        }
     }
 }
 

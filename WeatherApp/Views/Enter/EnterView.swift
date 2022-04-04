@@ -8,9 +8,10 @@
 import UIKit
 import SwiftUI
 
-class EnterView: UIView {
+final class EnterView: UIView {
     
     //MARK: - SubView
+    
     let logoImageView: UIImageView = {
         let image = UIImageView(image: UIImage(systemName: "cloud.sun.fill"))
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -22,7 +23,7 @@ class EnterView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Wpisz nazwę miasta!"
         label.textColor = .white
-        label.font = .boldSystemFont(ofSize: Constants.Font.small)
+        label.font = .boldSystemFont(ofSize: Font.small)
         return label
     }()
     
@@ -48,7 +49,7 @@ class EnterView: UIView {
     var tableView: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
-        table.rowHeight = Constants.Font.small
+        table.rowHeight = Font.small
         table.backgroundColor = .systemCyan
         table.separatorColor = .white
         return table
@@ -96,28 +97,28 @@ class EnterView: UIView {
     private func setupConstraints() {
         guard let tableHeightAnchor = tableHeightAnchor else {return}
         NSLayoutConstraint.activate([
-            logoImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Constants.Margins.medium),
+            logoImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Margins.medium),
             logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             logoImageView.widthAnchor.constraint(equalToConstant: 250),
             logoImageView.heightAnchor.constraint(equalToConstant: 180),
             
-            cityLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: Constants.Margins.big),
+            cityLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: Margins.big),
             cityLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             
             cityTextField.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: 10),
             cityTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 100),
             cityTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -100),
-            cityTextField.heightAnchor.constraint(equalToConstant: Constants.Font.small),
+            cityTextField.heightAnchor.constraint(equalToConstant: Font.small),
             
             tableView.topAnchor.constraint(equalTo: cityTextField.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: cityTextField.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: cityTextField.trailingAnchor),
             tableHeightAnchor,
             
-            checkButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: Constants.Margins.small),
+            checkButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: Margins.small),
             checkButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             checkButton.widthAnchor.constraint(equalToConstant: 200),
-            checkButton.heightAnchor.constraint(equalToConstant: Constants.Margins.big),
+            checkButton.heightAnchor.constraint(equalToConstant: Margins.big),
             checkButton.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor)
             
         ])
@@ -125,7 +126,6 @@ class EnterView: UIView {
     //MARK: - Methods
     
     func changeTableViewHeight() {
-        tableView.reloadData()
         let height = tableView.contentSize.height
         print("PONIZEJ WYNIK")
         print(height)
@@ -134,6 +134,9 @@ class EnterView: UIView {
             tableHeightAnchor.constant = height
         } else {
             tableHeightAnchor.constant = 160
+        }
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded()
         }
     }
 }

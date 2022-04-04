@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A80F8D0327F9C0B000150806 /* WeatherImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A80F8D0227F9C0B000150806 /* WeatherImage.swift */; };
 		A81603E127F71CEC00A6E361 /* Constatnts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81603E027F71CEC00A6E361 /* Constatnts.swift */; };
 		A881A2C027F5D5C300693939 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A881A2BF27F5D5C300693939 /* AppDelegate.swift */; };
 		A881A2C227F5D5C300693939 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A881A2C127F5D5C300693939 /* SceneDelegate.swift */; };
@@ -23,7 +22,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A80F8D0227F9C0B000150806 /* WeatherImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherImage.swift; sourceTree = "<group>"; };
 		A81603E027F71CEC00A6E361 /* Constatnts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constatnts.swift; sourceTree = "<group>"; };
 		A881A2BC27F5D5C300693939 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A881A2BF27F5D5C300693939 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +70,7 @@
 			children = (
 				A881A2C127F5D5C300693939 /* SceneDelegate.swift */,
 				A881A2BF27F5D5C300693939 /* AppDelegate.swift */,
+				A89BC57527FB5FB1001D4CBF /* Utils */,
 				A881A2DD27F5E78E00693939 /* Models */,
 				A881A2D427F5D7E800693939 /* Views */,
 				A881A2D327F5D7C500693939 /* Resources */,
@@ -121,11 +120,17 @@
 			children = (
 				A881A2E027F5E7B400693939 /* Weather.swift */,
 				A881A2E227F5E7C000693939 /* City.swift */,
-				A881A2E427F6075300693939 /* ApiClient.swift */,
-				A81603E027F71CEC00A6E361 /* Constatnts.swift */,
-				A80F8D0227F9C0B000150806 /* WeatherImage.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		A89BC57527FB5FB1001D4CBF /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A881A2E427F6075300693939 /* ApiClient.swift */,
+				A81603E027F71CEC00A6E361 /* Constatnts.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,7 +207,6 @@
 				A881A2DC27F5DC3A00693939 /* WeatherViewController.swift in Sources */,
 				A81603E127F71CEC00A6E361 /* Constatnts.swift in Sources */,
 				A881A2E527F6075300693939 /* ApiClient.swift in Sources */,
-				A80F8D0327F9C0B000150806 /* WeatherImage.swift in Sources */,
 				A881A2C427F5D5C300693939 /* EnterViewController.swift in Sources */,
 				A881A2C027F5D5C300693939 /* AppDelegate.swift in Sources */,
 				A881A2C227F5D5C300693939 /* SceneDelegate.swift in Sources */,
@@ -276,7 +280,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -330,7 +334,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

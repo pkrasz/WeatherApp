@@ -14,6 +14,7 @@ class WeatherView: UIView {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.tintColor = .systemBlue
+        image.contentMode = .scaleAspectFit
         return image
     }()
     
@@ -23,7 +24,7 @@ class WeatherView: UIView {
         label.text = "Miasto:"
         label.textColor = .white
         label.backgroundColor = .systemCyan
-        label.font = .boldSystemFont(ofSize: Constants.Font.big)
+        label.font = .boldSystemFont(ofSize: Font.big)
         label.textAlignment = .center
         return label
     }()
@@ -32,7 +33,7 @@ class WeatherView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemBlue
-        label.font = .boldSystemFont(ofSize: Constants.Font.small)
+        label.font = .boldSystemFont(ofSize: Font.small)
         
         return label
     }()
@@ -43,7 +44,7 @@ class WeatherView: UIView {
         label.text = "Pogoda:"
         label.textColor = .white
         label.backgroundColor = .systemCyan
-        label.font = .boldSystemFont(ofSize: Constants.Font.big)
+        label.font = .boldSystemFont(ofSize: Font.big)
         label.textAlignment = .center
         
         return label
@@ -54,7 +55,7 @@ class WeatherView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemBlue
-        label.font = .boldSystemFont(ofSize: Constants.Font.small)
+        label.font = .boldSystemFont(ofSize: Font.small)
         return label
     }()
     
@@ -64,7 +65,7 @@ class WeatherView: UIView {
         label.text = "Temperatura:"
         label.textColor = .white
         label.backgroundColor = .systemCyan
-        label.font = .boldSystemFont(ofSize: Constants.Font.big)
+        label.font = .boldSystemFont(ofSize: Font.big)
         label.textAlignment = .center
         return label
     }()
@@ -74,7 +75,7 @@ class WeatherView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemBlue
-        label.font = .boldSystemFont(ofSize: Constants.Font.small)
+        label.font = .boldSystemFont(ofSize: Font.small)
         return label
     }()
     
@@ -84,7 +85,7 @@ class WeatherView: UIView {
         label.text = "Prędkość wiatru:"
         label.textColor = .white
         label.backgroundColor = .systemCyan
-        label.font = .boldSystemFont(ofSize: Constants.Font.big)
+        label.font = .boldSystemFont(ofSize: Font.big)
         label.textAlignment = .center
         return label
     }()
@@ -94,7 +95,7 @@ class WeatherView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemBlue
-        label.font = .boldSystemFont(ofSize: Constants.Font.small)
+        label.font = .boldSystemFont(ofSize: Font.small)
         return label
     }()
     
@@ -104,7 +105,7 @@ class WeatherView: UIView {
         label.text = "Ciśnienie:"
         label.textColor = .white
         label.backgroundColor = .systemCyan
-        label.font = .boldSystemFont(ofSize: Constants.Font.big)
+        label.font = .boldSystemFont(ofSize: Font.big)
         label.textAlignment = .center
         return label
     }()
@@ -112,9 +113,8 @@ class WeatherView: UIView {
     let pressureTextLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemBlue
-        label.font = .boldSystemFont(ofSize: Constants.Font.small)
+        label.font = .boldSystemFont(ofSize: Font.small)
         return label
     }()
     
@@ -124,7 +124,7 @@ class WeatherView: UIView {
         label.text = "Wilgotność:"
         label.textColor = .white
         label.backgroundColor = .systemCyan
-        label.font = .boldSystemFont(ofSize: Constants.Font.big)
+        label.font = .boldSystemFont(ofSize: Font.big)
         label.textAlignment = .center
         return label
     }()
@@ -132,10 +132,18 @@ class WeatherView: UIView {
     let humidityTextLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemBlue
-        label.font = .boldSystemFont(ofSize: Constants.Font.small)
+        label.font = .boldSystemFont(ofSize: Font.small)
         return label
+    }()
+    
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.startAnimating()
+        activityIndicator.color = .systemBlue
+        activityIndicator.transform = CGAffineTransform.init(scaleX: 2, y: 2)
+        return activityIndicator
     }()
     
     
@@ -157,8 +165,8 @@ class WeatherView: UIView {
     
     private func setupView() {
         backgroundColor = .white
-        layer.cornerRadius = 50
-        layer.borderWidth = 40
+//        layer.cornerRadius = 50
+        layer.borderWidth = 44
         layer.borderColor = UIColor.systemCyan.cgColor
     }
     
@@ -176,66 +184,74 @@ class WeatherView: UIView {
         addSubview(pressureTextLabel)
         addSubview(humidityLabel)
         addSubview(humidityTextLabel)
-        
+        addSubview(activityIndicatorView)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            weatherImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            weatherImageView.widthAnchor.constraint(equalToConstant: 250),
-            weatherImageView.heightAnchor.constraint(equalToConstant: 180),
+            weatherImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            weatherImageView.widthAnchor.constraint(equalToConstant: Constants.weatherWidth),
+            weatherImageView.heightAnchor.constraint(equalToConstant: Constants.weatherHight),
             weatherImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            cityLabel.topAnchor.constraint(equalTo: weatherImageView.bottomAnchor, constant: Constants.Margins.big),
+            cityLabel.topAnchor.constraint(equalTo: weatherImageView.bottomAnchor, constant: Margins.medium),
             cityLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             cityLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            cityTextLabel.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: Constants.Margins.small),
-            cityTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.Margins.leading),
-            cityTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.Margins.trailing),
+            cityTextLabel.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: Margins.small),
+            cityTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Margins.leading),
+            cityTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Margins.trailing),
             
-            weatherStateLabel.topAnchor.constraint(equalTo: cityTextLabel.bottomAnchor, constant: Constants.Margins.small),
+            weatherStateLabel.topAnchor.constraint(equalTo: cityTextLabel.bottomAnchor, constant: Margins.small),
             weatherStateLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             weatherStateLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            weatherStateTextLabel.topAnchor.constraint(equalTo: weatherStateLabel.bottomAnchor, constant: Constants.Margins.small),
-            weatherStateTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.Margins.leading),
-            weatherStateTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.Margins.trailing),
+            weatherStateTextLabel.topAnchor.constraint(equalTo: weatherStateLabel.bottomAnchor, constant: Margins.small),
+            weatherStateTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Margins.leading),
+            weatherStateTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Margins.trailing),
             
-            temperatureLabel.topAnchor.constraint(equalTo: weatherStateTextLabel.bottomAnchor, constant: Constants.Margins.small),
+            temperatureLabel.topAnchor.constraint(equalTo: weatherStateTextLabel.bottomAnchor, constant: Margins.small),
             temperatureLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             temperatureLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            temperatureTextLabel.topAnchor.constraint(equalTo: temperatureLabel.bottomAnchor, constant: Constants.Margins.small),
-            temperatureTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.Margins.leading),
-            temperatureTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.Margins.trailing),
+            temperatureTextLabel.topAnchor.constraint(equalTo: temperatureLabel.bottomAnchor, constant: Margins.small),
+            temperatureTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Margins.leading),
+            temperatureTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Margins.trailing),
             
-            windSpeedLabel.topAnchor.constraint(equalTo: temperatureTextLabel.bottomAnchor, constant: Constants.Margins.small),
+            windSpeedLabel.topAnchor.constraint(equalTo: temperatureTextLabel.bottomAnchor, constant: Margins.small),
             windSpeedLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             windSpeedLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            windSpeedTextLabel.topAnchor.constraint(equalTo: windSpeedLabel.bottomAnchor, constant: Constants.Margins.small),
-            windSpeedTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.Margins.leading),
-            windSpeedTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.Margins.trailing),
+            windSpeedTextLabel.topAnchor.constraint(equalTo: windSpeedLabel.bottomAnchor, constant: Margins.small),
+            windSpeedTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Margins.leading),
+            windSpeedTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Margins.trailing),
             
-            pressureLabel.topAnchor.constraint(equalTo: windSpeedTextLabel.bottomAnchor, constant: Constants.Margins.small),
+            pressureLabel.topAnchor.constraint(equalTo: windSpeedTextLabel.bottomAnchor, constant: Margins.small),
             pressureLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             pressureLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            pressureTextLabel.topAnchor.constraint(equalTo: pressureLabel.bottomAnchor, constant: Constants.Margins.small),
-            pressureTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.Margins.leading),
-            pressureTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.Margins.trailing),
+            pressureTextLabel.topAnchor.constraint(equalTo: pressureLabel.bottomAnchor, constant: Margins.small),
+            pressureTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Margins.leading),
+            pressureTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Margins.trailing),
             
-            humidityLabel.topAnchor.constraint(equalTo: pressureTextLabel.bottomAnchor, constant: Constants.Margins.small),
+            humidityLabel.topAnchor.constraint(equalTo: pressureTextLabel.bottomAnchor, constant: Margins.small),
             humidityLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             humidityLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            humidityTextLabel.topAnchor.constraint(equalTo: humidityLabel.bottomAnchor, constant: Constants.Margins.small),
-            humidityTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.Margins.leading),
-            humidityTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.Margins.trailing)
+            humidityTextLabel.topAnchor.constraint(equalTo: humidityLabel.bottomAnchor, constant: Margins.small),
+            humidityTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Margins.leading),
+            humidityTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Margins.trailing),
             
+            
+            activityIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            activityIndicatorView.topAnchor.constraint(equalTo: topAnchor, constant: 190)
         ])
     }
 }
 
-
+extension WeatherView {
+    enum Constants {
+        static let weatherWidth: CGFloat = 250
+        static let weatherHight: CGFloat = 180
+    }
+}
