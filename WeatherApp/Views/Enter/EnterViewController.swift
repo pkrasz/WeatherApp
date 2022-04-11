@@ -27,7 +27,7 @@ final class EnterViewController: UIViewController {
             DispatchQueue.main.async {
                 print("PONIZEJ TABELKA")
                 print(self.cities)
-                self.contentView.tableView.reloadData()
+                self.contentView .tableView.reloadData()
                 self.contentView.changeTableViewHeight()
             }
         }

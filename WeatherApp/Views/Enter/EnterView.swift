@@ -57,8 +57,6 @@ final class EnterView: UIView {
     
     var tableHeightAnchor: NSLayoutConstraint?
     
-//    var tableHeight: Double = 40.0
-    
     //MARK: - Initializator
     
     override init(frame: CGRect) {
@@ -66,8 +64,6 @@ final class EnterView: UIView {
         
         
         tableHeightAnchor = tableView.heightAnchor.constraint(equalToConstant: 0)
-        guard let tableHeightAnchor = tableHeightAnchor else {return}
-        tableHeightAnchor.isActive = true
         
         setupView()
         setupSubview()
