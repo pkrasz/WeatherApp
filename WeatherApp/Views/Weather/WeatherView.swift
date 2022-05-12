@@ -7,12 +7,12 @@
 
 import UIKit
 
-class WeatherView: UIView {
+final class WeatherView: UIView {
     
     //MARK: - SubView
+    
     let weatherImageView: UIImageView = {
         let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
         image.tintColor = .systemBlue
         image.contentMode = .scaleAspectFit
         return image
@@ -20,8 +20,7 @@ class WeatherView: UIView {
     
     let cityLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Miasto:"
+        label.text = Label.Text.city
         label.textColor = .white
         label.backgroundColor = .systemCyan
         label.font = .boldSystemFont(ofSize: Font.big)
@@ -31,29 +30,23 @@ class WeatherView: UIView {
     
     let cityTextLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemBlue
         label.font = .boldSystemFont(ofSize: Font.small)
-        
         return label
     }()
     
     let weatherStateLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Pogoda:"
+        label.text = Label.Text.weather
         label.textColor = .white
         label.backgroundColor = .systemCyan
         label.font = .boldSystemFont(ofSize: Font.big)
         label.textAlignment = .center
-        
         return label
     }()
     
     let weatherStateTextLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemBlue
         label.font = .boldSystemFont(ofSize: Font.small)
         return label
@@ -61,8 +54,7 @@ class WeatherView: UIView {
     
     let temperatureLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Temperatura:"
+        label.text = Label.Text.temperature
         label.textColor = .white
         label.backgroundColor = .systemCyan
         label.font = .boldSystemFont(ofSize: Font.big)
@@ -72,8 +64,6 @@ class WeatherView: UIView {
     
     let temperatureTextLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemBlue
         label.font = .boldSystemFont(ofSize: Font.small)
         return label
@@ -81,8 +71,7 @@ class WeatherView: UIView {
     
     let windSpeedLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Prędkość wiatru:"
+        label.text = Label.Text.windSpeed
         label.textColor = .white
         label.backgroundColor = .systemCyan
         label.font = .boldSystemFont(ofSize: Font.big)
@@ -92,8 +81,6 @@ class WeatherView: UIView {
     
     let windSpeedTextLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemBlue
         label.font = .boldSystemFont(ofSize: Font.small)
         return label
@@ -101,8 +88,7 @@ class WeatherView: UIView {
     
     let pressureLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Ciśnienie:"
+        label.text = Label.Text.pressure
         label.textColor = .white
         label.backgroundColor = .systemCyan
         label.font = .boldSystemFont(ofSize: Font.big)
@@ -112,7 +98,6 @@ class WeatherView: UIView {
     
     let pressureTextLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemBlue
         label.font = .boldSystemFont(ofSize: Font.small)
         return label
@@ -120,8 +105,7 @@ class WeatherView: UIView {
     
     let humidityLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Wilgotność:"
+        label.text = Label.Text.humidity
         label.textColor = .white
         label.backgroundColor = .systemCyan
         label.font = .boldSystemFont(ofSize: Font.big)
@@ -131,7 +115,6 @@ class WeatherView: UIView {
     
     let humidityTextLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemBlue
         label.font = .boldSystemFont(ofSize: Font.small)
         return label
@@ -139,13 +122,24 @@ class WeatherView: UIView {
     
     let activityIndicatorView: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.startAnimating()
         activityIndicator.color = .systemBlue
-        activityIndicator.transform = CGAffineTransform.init(scaleX: 2, y: 2)
+        activityIndicator.transform = CGAffineTransform.init(scaleX: Constants.transform, y: Constants.transform)
         return activityIndicator
     }()
     
+    let spaceImageView: UIImageView = {
+        let image = UIImageView()
+        image.backgroundColor = .systemCyan
+        return image
+    }()
+    
+    let logoImageView: UIImageView = {
+        let image = UIImageView()
+        image.backgroundColor = .systemCyan
+        image.contentMode = .scaleAspectFit
+        return image
+    }()
     
     //MARK: - Initializator
     
@@ -165,93 +159,135 @@ class WeatherView: UIView {
     
     private func setupView() {
         backgroundColor = .white
-//        layer.cornerRadius = 50
-        layer.borderWidth = 44
+        layer.borderWidth = Subview.viewBorderWidth
         layer.borderColor = UIColor.systemCyan.cgColor
     }
     
     private func setupSubview() {
-        addSubview(weatherImageView)
-        addSubview(cityLabel)
-        addSubview(cityTextLabel)
-        addSubview(weatherStateLabel)
-        addSubview(weatherStateTextLabel)
-        addSubview(temperatureLabel)
-        addSubview(temperatureTextLabel)
-        addSubview(windSpeedLabel)
-        addSubview(windSpeedTextLabel)
-        addSubview(pressureLabel)
-        addSubview(pressureTextLabel)
-        addSubview(humidityLabel)
-        addSubview(humidityTextLabel)
-        addSubview(activityIndicatorView)
+        [weatherImageView,
+         cityLabel,
+         cityTextLabel,
+         weatherStateLabel,
+         weatherStateTextLabel,
+         temperatureLabel,
+         temperatureTextLabel,
+         windSpeedLabel,
+         windSpeedTextLabel,
+         pressureLabel,
+         pressureTextLabel,
+         humidityLabel,
+         humidityTextLabel,
+         activityIndicatorView,
+         spaceImageView,
+        logoImageView]
+            .forEach(addSubview)
     }
     
     private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            weatherImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-            weatherImageView.widthAnchor.constraint(equalToConstant: Constants.weatherWidth),
-            weatherImageView.heightAnchor.constraint(equalToConstant: Constants.weatherHight),
-            weatherImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            
-            cityLabel.topAnchor.constraint(equalTo: weatherImageView.bottomAnchor, constant: Margins.medium),
-            cityLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            cityLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            cityTextLabel.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: Margins.small),
-            cityTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Margins.leading),
-            cityTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Margins.trailing),
-            
-            weatherStateLabel.topAnchor.constraint(equalTo: cityTextLabel.bottomAnchor, constant: Margins.small),
-            weatherStateLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            weatherStateLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            weatherStateTextLabel.topAnchor.constraint(equalTo: weatherStateLabel.bottomAnchor, constant: Margins.small),
-            weatherStateTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Margins.leading),
-            weatherStateTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Margins.trailing),
-            
-            temperatureLabel.topAnchor.constraint(equalTo: weatherStateTextLabel.bottomAnchor, constant: Margins.small),
-            temperatureLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            temperatureLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            temperatureTextLabel.topAnchor.constraint(equalTo: temperatureLabel.bottomAnchor, constant: Margins.small),
-            temperatureTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Margins.leading),
-            temperatureTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Margins.trailing),
-            
-            windSpeedLabel.topAnchor.constraint(equalTo: temperatureTextLabel.bottomAnchor, constant: Margins.small),
-            windSpeedLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            windSpeedLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            windSpeedTextLabel.topAnchor.constraint(equalTo: windSpeedLabel.bottomAnchor, constant: Margins.small),
-            windSpeedTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Margins.leading),
-            windSpeedTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Margins.trailing),
-            
-            pressureLabel.topAnchor.constraint(equalTo: windSpeedTextLabel.bottomAnchor, constant: Margins.small),
-            pressureLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            pressureLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            pressureTextLabel.topAnchor.constraint(equalTo: pressureLabel.bottomAnchor, constant: Margins.small),
-            pressureTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Margins.leading),
-            pressureTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Margins.trailing),
-            
-            humidityLabel.topAnchor.constraint(equalTo: pressureTextLabel.bottomAnchor, constant: Margins.small),
-            humidityLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            humidityLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            humidityTextLabel.topAnchor.constraint(equalTo: humidityLabel.bottomAnchor, constant: Margins.small),
-            humidityTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Margins.leading),
-            humidityTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Margins.trailing),
-            
-            
-            activityIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            activityIndicatorView.topAnchor.constraint(equalTo: topAnchor, constant: 190)
-        ])
+        weatherImageView.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide).offset(Constants.imageTop)
+            $0.leading.equalToSuperview().offset(Subview.viewBorderWidth)
+            $0.trailing.equalToSuperview().offset(Subview.viewBorderWidthMinus)
+            $0.height.equalToSuperview().multipliedBy(Constants.multiplied)
+            $0.centerX.equalToSuperview()
+        }
+        cityLabel.snp.makeConstraints {
+            $0.top.equalTo(weatherImageView.snp.bottom).offset(Margins.medium)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        cityTextLabel.snp.makeConstraints {
+            $0.top.equalTo(cityLabel.snp.bottom).offset(Margins.small)
+            $0.leading.equalTo(Margins.leading)
+            $0.trailing.equalTo(Margins.trailing)
+        }
+        
+        weatherStateLabel.snp.makeConstraints {
+            $0.top.equalTo(cityTextLabel.snp.bottom).offset(Margins.small)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        weatherStateTextLabel.snp.makeConstraints {
+            $0.top.equalTo(weatherStateLabel.snp.bottom).offset(Margins.small)
+            $0.leading.equalTo(Margins.leading)
+            $0.trailing.equalTo(Margins.trailing)
+        }
+        
+        temperatureLabel.snp.makeConstraints {
+            $0.top.equalTo(weatherStateTextLabel.snp.bottom).offset(Margins.small)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        temperatureTextLabel.snp.makeConstraints {
+            $0.top.equalTo(temperatureLabel.snp.bottom).offset(Margins.small)
+            $0.leading.equalTo(Margins.leading)
+            $0.trailing.equalTo(Margins.trailing)
+        }
+        
+        windSpeedLabel.snp.makeConstraints {
+            $0.top.equalTo(temperatureTextLabel.snp.bottom).offset(Margins.small)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        windSpeedTextLabel.snp.makeConstraints {
+            $0.top.equalTo(windSpeedLabel.snp.bottom).offset(Margins.small)
+            $0.leading.equalTo(Margins.leading)
+            $0.trailing.equalTo(Margins.trailing)
+        }
+        
+        pressureLabel.snp.makeConstraints {
+            $0.top.equalTo(windSpeedTextLabel.snp.bottom).offset(Margins.small)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        pressureTextLabel.snp.makeConstraints {
+            $0.top.equalTo(pressureLabel.snp.bottom).offset(Margins.small)
+            $0.leading.equalTo(Margins.leading)
+            $0.trailing.equalTo(Margins.trailing)
+        }
+        
+        humidityLabel.snp.makeConstraints {
+            $0.top.equalTo(pressureTextLabel.snp.bottom).offset(Margins.small)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        humidityTextLabel.snp.makeConstraints {
+            $0.top.equalTo(humidityLabel.snp.bottom).offset(Margins.small)
+            $0.leading.equalTo(Margins.leading)
+            $0.trailing.equalTo(Margins.trailing)
+        }
+        
+        spaceImageView.snp.makeConstraints {
+            $0.top.equalTo(humidityTextLabel.snp.bottom).offset(Margins.small)
+            $0.leading.equalToSuperview().offset(Subview.viewBorderWidth)
+            $0.trailing.equalToSuperview().offset(Subview.viewBorderWidthMinus)
+            $0.height.equalTo(Margins.small)
+        }
+        
+        logoImageView.snp.makeConstraints {
+            $0.top.equalTo(spaceImageView.snp.bottom)
+            $0.leading.greaterThanOrEqualToSuperview().offset(Subview.viewBorderWidth)
+            $0.trailing.lessThanOrEqualToSuperview().offset(Subview.viewBorderWidthMinus)
+            $0.centerX.equalToSuperview()
+            $0.bottom.lessThanOrEqualToSuperview().offset(Subview.viewBorderWidthMinus)
+        }
+        
+        activityIndicatorView.snp.makeConstraints {
+            $0.centerX.equalTo(weatherImageView.snp.centerX)
+            $0.centerY.equalTo(weatherImageView.snp.centerY)
+        }
     }
 }
 
+    //MARK: - Extensions
+
 extension WeatherView {
+    enum WeatherView {
+        
+    }
     enum Constants {
-        static let weatherWidth: CGFloat = 250
-        static let weatherHight: CGFloat = 180
+        static let transform: CGFloat = 2
+        static let multiplied: CGFloat = 0.11
+        static let imageTop: CGFloat = 20
     }
 }

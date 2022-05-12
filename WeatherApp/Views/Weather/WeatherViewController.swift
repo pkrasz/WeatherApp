@@ -36,7 +36,6 @@ final class WeatherViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     //MARK: - Lifecycle
     
     override func loadView() {
@@ -67,7 +66,6 @@ final class WeatherViewController: UIViewController {
     //MARK: - Methods
     
     private func loadInformation() {
-        
         contentView.activityIndicatorView.isHidden = true
         
         guard let weather = weather else {return}
@@ -94,20 +92,35 @@ final class WeatherViewController: UIViewController {
         case WeatherStates.Name.thunderstorm:
             contentView.weatherImageView.image = WeatherStates.Image.thunderstorm
         default:
-            contentView.weatherImageView.image = UIImage(systemName: "cloud.sun")
+            Void()
         }
+        
+        let theTemp = String(format: Constants.tempFormat, weather.theTemp)
+        let windSpeed = String(format: Constants.windFormat, weather.windSpeed)
+        let airPressure = String(weather.airPressure)
+        let humidity = String(weather.humidity)
         
         contentView.cityTextLabel.text = cityName
         contentView.weatherStateTextLabel.text = weather.weatherStateName
-        contentView.temperatureTextLabel.text = "\(String(weather.theTemp)) °C"
-        contentView.windSpeedTextLabel.text = "\(String(weather.windSpeed)) mph"
-        contentView.pressureTextLabel.text = "\(String(weather.airPressure)) mbar"
-        contentView.humidityTextLabel.text = "\(String(weather.humidity)) %"
+        contentView.temperatureTextLabel.text = theTemp + Units.celcius
+        contentView.windSpeedTextLabel.text = windSpeed + Units.mph
+        contentView.pressureTextLabel.text = airPressure + Units.milibar
+        contentView.humidityTextLabel.text = humidity + Units.percent
+        contentView.logoImageView.image = WeatherStates.Image.weatherAppLogo
         
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: Constants.animate) {
             self.contentView.layoutIfNeeded()
         }
     }
 }
 
+    //MARK: - Extensions
+
+extension WeatherViewController {
+    enum Constants {
+        static let animate: CGFloat = 0.5
+        static let tempFormat: String = "%.0f"
+        static let windFormat: String = "%.2f"
+    }
+}
 

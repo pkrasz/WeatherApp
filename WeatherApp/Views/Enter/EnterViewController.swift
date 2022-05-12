@@ -7,10 +7,6 @@
 
 import UIKit
 
-enum Identifiere {
-    static let cell = "UITableViewCell"
-}
-
 final class EnterViewController: UIViewController {
     
     //MARK: - Properties
@@ -23,10 +19,7 @@ final class EnterViewController: UIViewController {
     var cityName: String?
     var cities: [City] = [] {
         didSet {
-            print(cities)
             DispatchQueue.main.async {
-                print("PONIZEJ TABELKA")
-                print(self.cities)
                 self.contentView .tableView.reloadData()
                 self.contentView.changeTableViewHeight()
             }
@@ -56,37 +49,33 @@ final class EnterViewController: UIViewController {
     }
     
     private func setupBindings() {
-        // UNOWNED gdy wiesz ze cos bedzie od razu np tapniecie na buttona
         let textEditing = UIAction { [unowned self] _ in
             let city = self.contentView.cityTextField.text
-            guard let city = city else {
-                return
-            }
-            let apiClient = ApiClient.shared
-            // WEAK gdy wiesz ze cos nie jest od razu np odpowiedz z serwera
-            apiClient.getData(for: .city(city), as: [City].self) { [weak self] cities in
-                self?.cities = cities
-            }
-            if self.contentView.cityTextField.text == "" {
+            guard let city = city else { return }
+            
+            if city == "" {
                 cities = []
+            } else {
+                let apiClient = ApiClient.shared
+                apiClient.getData(for: .city(city), as: [City].self) { [weak self] cities in
+                    self?.cities = cities
+                }
             }
         }
         contentView.cityTextField.addAction(textEditing, for: .editingChanged)
         
         let tapped = UIAction{ [unowned self] _ in
             if cityKey == nil && cityName == nil {
-                let alert = UIAlertController(title: "Musisz zaznaczyć miasto!", message: nil, preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-                
+                let alert = UIAlertController(title: Alert.title, message: nil, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: Alert.cancel, style: .default, handler: nil))
                 present(alert, animated: true)
             } else {
-            guard let cityKey = cityKey else {return}
-            guard let cityName = cityName else {return}
-            
-            let weatherViewController = WeatherViewController(cityName: cityName, cityKey: cityKey)
-            self.navigationController?.pushViewController(weatherViewController, animated: true)
-        }
+                guard let cityKey = cityKey else { return }
+                guard let cityName = cityName else { return }
+                
+                let weatherViewController = WeatherViewController(cityName: cityName, cityKey: cityKey)
+                self.navigationController?.pushViewController(weatherViewController, animated: true)
+            }
         }
         contentView.checkButton.addAction(tapped, for: .touchUpInside)
     }
@@ -120,22 +109,3 @@ extension EnterViewController: UITableViewDelegate {
         contentView.cityTextField.text = cityName
     }
 }
-
-
-
-//contentView.checkButton.addTarget(self, action: #selector(coordinateToWeather), for: .touchUpInside)
-            
-//    @objc private func coordinateToWeather() {
-//        let weatherViewController = WeatherViewController(cityName: cityName, cityKey: cityKey)
-//        self.navigationController?.pushViewController(weatherViewController, animated: true)
-//    }
-
-//        let textExperiment = UIAction{ [unowned self] _ in
-//
-//            //            guard let cityKey = cityKey else {return}
-//            //            guard let cityName = cityName else {return}
-//            let weatherViewController = WeatherViewController(cityName: self.cityName, cityKey: self.cityKey)
-//            self.navigationController?.pushViewController(weatherViewController, animated: true)
-//        }
-        
-//        contentView.cityTextField.addAction(textExperiment, for: .editingChanged)
