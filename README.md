@@ -20,7 +20,7 @@ This iOS app allows you to check the weather in different cities around the worl
 - **OOP** (object-oriented programming)
 - Clousures
 
-## Author
+## Author (code & graphic design)
 
 Paweł Kraszewski
 
