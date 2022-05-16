@@ -14,7 +14,7 @@ This iOS app allows you to check the weather in different cities around the worl
 ## 🛠 Tech stack
 
 - **UI** from code
-- **API**
+- **API** (URL Session)
 - SnapKit
 - Generics
 - **OOP** (object-oriented programming)
